@@ -7,7 +7,7 @@ const resources = [
                 title: "W3Schools",
                 url: "https://www.w3schools.com/html/"
             },
-            {
+            { 
                 title: "HTML Living standard",
                 url: "https://html.spec.whatwg.org/multipage/"
             },

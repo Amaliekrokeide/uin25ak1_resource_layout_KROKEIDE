@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ressursarkiv</title>
+    <script src="ressurser.js"></script>
+    <link rel="stylesheet" href="ressursarkiv.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul id="tabList" class="page-list"></ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h1 id="heading"></h1>
+            <p id="description"></p>
+            <ul id="sourceList"></ul>
+        </section>
+    </main>
+    <script>
+        const tabList = document.getElementById("tabList");
+        function createSourceList(listElements) {
+            const list = document.getElementById("sourceList")
+            list.innerHTML = "";
+            listElements.forEach((el) => list.appendChild(el))
+        }
+
+        function createSourceListNew(sources) {
+            const list = document.getElementById("sourceList")
+            list.innerHTML = sources.map((s) => `<li><a href=${s.url}>${s.title}</a></li>`).join("");
+        }
+        
+        function setActiveTab(categoryName) {
+            console.log("test", categoryName)
+            const resource = resources.filter((r) => r.category == categoryName)[0];
+            document.getElementById("heading").innerHTML = resource.category;
+            document.getElementById("description").innerHTML = resource.text;
+            createSourceListNew(resource.sources)
+        }
+
+        const categories = resources.map(r => r.category); 
+        function tabListClicked(evt) {
+            console.log("click", evt.target.innerHTML, [evt.target.closest(".tab")])
+            const item = evt.target.closest(".tab")
+            if(categories.includes(evt.target.id)) {
+                setActiveTab(evt.target.id);
+                evt.target.focus()
+            }
+        }
+        tabList.addEventListener("click", tabListClicked)
+        tabList.innerHTML = resources.map((r) => 
+            `<li id=${r.category} tabindex=0 class="tab">${r.category}</li>`
+        ).join("")
+
+        setActiveTab("HTML");
+        tabList.children[0].focus()
+        console.log("00", tabList.children[0])
+     
+    </script>
+</body>
+</html>
